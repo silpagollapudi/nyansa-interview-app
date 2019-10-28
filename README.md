@@ -6,10 +6,10 @@ To get you started you can simply clone the interview-app-devmgr repository and 
 
 #### Prerequisites
 
-You need git to clone the nyansa-interview-app repository. You can get it from http://git-scm.com/.
+You need git to clone the nyansa-interview-app repository. You can get it from https://github.com/silpagollapudi/nyansa-interview-app.git.
 
-`git clone https://github.com/Nyansa/interview-app-devmgr` <br>
-`cd interview-app-devmgr`
+`git clone https://github.com/silpagollapudi/nyansa-interview-app.git` <br>
+`cd nyansa-interview-app`
 
 #### Installing dependencies
 
