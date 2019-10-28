@@ -20,7 +20,7 @@ node_modules - contains the npm packages for the tools we need
 #### Run the Application
 
 `npm start` <br>
-Now browse to the app at http://localhost:8000.
+Now browse to the app at http://localhost:3000.
 
 #### Notes
 
