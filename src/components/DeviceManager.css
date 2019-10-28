@@ -1,0 +1,38 @@
+.title {
+  font-family: 'Abel';
+  color: white;
+  font-size: 60px;
+}
+
+.top{
+  margin-top: 50px;
+  font-family: 'Abel';
+}
+
+.row {
+  width: 21%;
+  display: inline-block;
+  margin-right: 15px;
+  /* background-image: url('../table-background.jpg'); */
+  background-color: #c9c5c3;
+  /* background-color: black; */
+  opacity: 0.6;
+}
+
+.row h3{
+  font-family: 'Abel';
+}
+
+.rows{
+  margin-bottom: 25px;
+}
+
+.full-table{
+  margin-top: 50px;
+  color: white;
+}
+
+.page{
+  margin: left;
+  margin-top: 65px;
+}
