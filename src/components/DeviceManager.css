@@ -14,7 +14,6 @@
   display: inline-block;
   margin-right: 15px;
   background-color: #c9c5c3;
-  /* background-color: black; */
   opacity: 0.8;
 }
 
@@ -33,5 +32,5 @@
 
 .page{
   margin: left;
-  margin-top: 65px;
+  margin-top: 40px;
 }
