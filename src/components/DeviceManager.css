@@ -13,10 +13,9 @@
   width: 21%;
   display: inline-block;
   margin-right: 15px;
-  /* background-image: url('../table-background.jpg'); */
   background-color: #c9c5c3;
   /* background-color: black; */
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .row h3{

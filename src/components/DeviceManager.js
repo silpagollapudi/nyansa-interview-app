@@ -2,7 +2,6 @@ import React from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css'
 import styles from './DeviceManager.css';
-// import DataTable from 'react-editable-table';
 
 class DeviceManger extends React.Component{
   constructor(){
@@ -64,6 +63,53 @@ class DeviceManger extends React.Component{
           networkRxBytes: this.bytesToString(30 * 1024 * 1024),
           networkTxBytes: this.bytesToString(20 * 1024 * 1024)
         }
+      ],
+      filtered_columns: [
+        {
+          Header: 'IP',
+          accessor: 'ip',
+        }, {
+          Header: 'Owner',
+          accessor: 'owner',
+        }, {
+          Header: 'CPU',
+          accessor: 'cpuPct',
+          style: {backgroundColor: '#dedcd9'}
+        }, {
+          Header: 'Memory',
+          accessor: 'memBytes',
+          style: {backgroundColor: '#dedcd9'}
+        },{
+          Header: 'TX',
+          accessor: 'networkRxBytes',
+          style: {backgroundColor: '#dedcd9'}
+        },{
+          Header: 'RX',
+          accessor: 'networkTxBytes',
+          style: {backgroundColor: '#dedcd9'}
+         }
+      ],
+      columns: [
+        {
+          Header: 'IP',
+          accessor: 'ip',
+        }, {
+          Header: 'Owner',
+          accessor: 'owner',
+          Cell: this.renderEditable
+        }, {
+          Header: 'CPU',
+          accessor: 'cpuPct',
+        }, {
+          Header: 'Memory',
+          accessor: 'memBytes',
+        },{
+          Header: 'TX',
+          accessor: 'networkRxBytes',
+        },{
+           Header: 'RX',
+           accessor: 'networkTxBytes',
+        }
       ]
     }
   this.renderEditable = this.renderEditable.bind(this);
@@ -97,7 +143,7 @@ class DeviceManger extends React.Component{
 
     return (
       <input
-        style={{color: 'white',backgroundColor: '#597c80'}}
+        style={{color: 'white',backgroundColor: 'grey'}}
         placeholder="type here"
         name="input"
         onChange={this.handleInputChange.bind(null, cellInfo)}
@@ -105,132 +151,48 @@ class DeviceManger extends React.Component{
       />
     );
   };
-  render() {
-    const columns = [{
-      Header: 'IP',
-      accessor: 'ip',
-    }, {
-      Header: 'Owner',
-      accessor: 'owner',
-      Cell: this.renderEditable
-    }, {
-      Header: 'CPU',
-      accessor: 'cpuPct',
-    }, {
-      Header: 'Memory',
-      accessor: 'memBytes',
-    },{
-      Header: 'TX',
-      accessor: 'networkRxBytes',
-    },{
-       Header: 'RX',
-       accessor: 'networkTxBytes',
-    }]
 
-   const filtered_columns = [{
-     Header: 'IP',
-     accessor: 'ip',
-   }, {
-     Header: 'Owner',
-     accessor: 'owner',
-   }, {
-     Header: 'CPU',
-     accessor: 'cpuPct',
-     style: {backgroundColor: '#dedcd9'}
-   }, {
-     Header: 'Memory',
-     accessor: 'memBytes',
-     style: {backgroundColor: '#dedcd9'}
-   },{
-     Header: 'TX',
-     accessor: 'networkRxBytes',
-     style: {backgroundColor: '#dedcd9'}
-   },{
-     Header: 'RX',
-     accessor: 'networkTxBytes',
-     style: {backgroundColor: '#dedcd9'}
-    }]
+  renderTables(Header, id) {
+    return (
+      <div className="row">
+        <h3> Top {Header} Devices</h3>
+        <ReactTable
+          showPaginationBottom= {false}
+          data={this.state.data}
+          columns={this.state.filtered_columns.filter(x => x.Header === 'Owner' || x.Header === 'IP' || x.Header === `${Header}`)}
+          defaultSorted={[
+            {
+              id: `${id}`,
+              desc: true
+            }
+          ]}
+          minRows={0}
+          defaultPageSize={5}
+          sortable={false}
+        />
+      </div>
+    );
+  }
+
+  render() {
 
     return (
       <div className="top">
       <h1 className="title"> Device Manager </h1>
       <div className="page">
         <div className="rows">
-          <div className="row">
-            <h3> Top CPU Devices</h3>
-            <ReactTable
-              showPaginationBottom= {false}
-              data={this.state.data}
-              columns={filtered_columns.filter(x => x.Header !== 'Memory' && x.Header !== 'TX' && x.Header !== 'RX')}
-              defaultSorted={[
-                {
-                  id: "cpuPct",
-                  desc: true
-                }
-              ]}
-              minRows={0}
-              defaultPageSize={5}
-              sortable={false}
-            />
-          </div>
-          <div className="row">
-            <h3> Top Memory Devices</h3>
-            <ReactTable
-              showPaginationBottom= {false}
-              data={this.state.data}
-              columns={filtered_columns.filter(x => x.Header !== 'CPU' && x.Header !== 'TX' && x.Header !== 'RX')}
-              defaultSorted={[
-                {
-                  id: "memBytes",
-                  desc: true
-                }
-              ]}
-              minRows={0}
-              defaultPageSize={5}
-              sortable={false}
-            />
-          </div>
-          <div className="row">
-            <h3> Top TX Devices </h3>
-            <ReactTable
-              showPaginationBottom= {false}
-              data={this.state.data}
-              columns={filtered_columns.filter(x => x.Header !== 'CPU' && x.Header !== 'Memory' && x.Header !== 'RX')}
-              defaultSorted={[
-                {
-                  id: "networkRxBytes",
-                  desc: true
-                }
-              ]}
-              minRows={0}
-              defaultPageSize={5}
-              sortable={false}
-            />
-          </div>
-          <div className="row">
-            <h3> Top RX Devices </h3>
-            <ReactTable
-              showPaginationBottom= {false}
-              data={this.state.data}
-              columns={filtered_columns.filter(x => x.Header !== 'CPU' && x.Header !== 'Memory' && x.Header !== 'TX')}
-              defaultSorted={[
-                {
-                  id: "networkTxBytes",
-                  desc: true
-                }
-              ]}
-              minRows={0}
-              defaultPageSize={5}
-              sortable={false}
-            />
-          </div>
+          {this.renderTables('CPU', 'cpuPct')}
+          {this.renderTables('Memory', 'memBytes')}
+          {this.renderTables('TX', 'networkRxBytes')}
+          {this.renderTables('RX', 'networkTxBytes')}
         </div>
         <div className="full-table">
+        <h1> Device List </h1>
           <ReactTable
             showPaginationBottom= {false}
-            style={{width: '50%', marginLeft: '25%', color: 'white', backgroundColor: '#597c80', opacity: '0.4'}}
+            style={{width: '50%', marginLeft: '25%', color: 'white', backgroundColor: '#597c80', opacity: '0.8'}}
             data={this.state.data}
-            columns={columns}
+            columns={this.state.columns}
             minRows={0}
           />
         </div>
