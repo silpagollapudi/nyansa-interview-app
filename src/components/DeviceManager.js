@@ -186,7 +186,7 @@ class DeviceManger extends React.Component{
           {this.renderTables('TX', 'networkRxBytes')}
           {this.renderTables('RX', 'networkTxBytes')}
         </div>
-        <div className="full-table">
+        <div className="full-table" style={{borderStyle: 'solid', borderColor: '#92a8d1'}}>
         <h1> Device List </h1>
           <ReactTable
             showPaginationBottom= {false}
@@ -195,6 +195,7 @@ class DeviceManger extends React.Component{
             columns={this.state.columns}
             minRows={0}
           />
+        <h1> </h1>
         </div>
         </div>
       </div>
