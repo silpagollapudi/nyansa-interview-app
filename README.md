@@ -2,7 +2,7 @@
 
 ### Getting Started
 
-To get you started you can simply clone the interview-app-devmgr repository and install the dependencies:
+To get you started you can simply clone the nyansa-interview-app repository and install the dependencies. I decided to create this app using the ReactJS library.
 
 #### Prerequisites
 
