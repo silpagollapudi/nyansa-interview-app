@@ -2,6 +2,7 @@ import React from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css'
 import styles from './DeviceManager.css';
+import RenderTable from './RenderTable.js';
 
 class DeviceManger extends React.Component{
   constructor(){
@@ -78,15 +79,33 @@ class DeviceManger extends React.Component{
         }, {
           Header: 'Memory',
           accessor: 'memBytes',
-          style: {backgroundColor: '#dedcd9'}
+          style: {backgroundColor: '#dedcd9'},
+          sortMethod: (a, b) => {
+            if (a.length === b.length) {
+              return parseInt(a) > parseInt(b) ? 1 : -1;
+            }
+            return a.length > b.length ? 1 : -1;
+          }
         },{
           Header: 'TX',
           accessor: 'networkRxBytes',
-          style: {backgroundColor: '#dedcd9'}
+          style: {backgroundColor: '#dedcd9'},
+          sortMethod: (a, b) => {
+            if (a.length === b.length) {
+              return parseInt(a) > parseInt(b) ? 1 : -1;
+            }
+            return a.length > b.length ? 1 : -1;
+          }
         },{
           Header: 'RX',
           accessor: 'networkTxBytes',
-          style: {backgroundColor: '#dedcd9'}
+          style: {backgroundColor: '#dedcd9'},
+          sortMethod: (a, b) => {
+            if (a.length === b.length) {
+              return parseInt(a) > parseInt(b) ? 1 : -1;
+            }
+            return a.length > b.length ? 1 : -1;
+          }
          }
       ],
       columns: [
@@ -103,12 +122,30 @@ class DeviceManger extends React.Component{
         }, {
           Header: 'Memory',
           accessor: 'memBytes',
+          sortMethod: (a, b) => {
+            if (a.length === b.length) {
+              return parseInt(a) > parseInt(b) ? 1 : -1;
+            }
+            return a.length > b.length ? 1 : -1;
+          },
         },{
           Header: 'TX',
           accessor: 'networkRxBytes',
+          sortMethod: (a, b) => {
+            if (a.length === b.length) {
+              return parseInt(a) > parseInt(b) ? 1 : -1;
+            }
+            return a.length > b.length ? 1 : -1;
+          },
         },{
            Header: 'RX',
            accessor: 'networkTxBytes',
+           sortMethod: (a, b) => {
+             if (a.length === b.length) {
+               return parseInt(a) > parseInt(b) ? 1 : -1;
+             }
+             return a.length > b.length ? 1 : -1;
+           }
         }
       ]
     }
@@ -125,9 +162,9 @@ class DeviceManger extends React.Component{
     var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
 
     if (i == 0)
-      return bytes.toFixed(2) + ' ' + sizes[0];
+      return bytes + " " + sizes[i]
     else
-      return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
+      return (bytes / Math.pow(1024, i)).toFixed(2) + " " + sizes[i]
   }
 
   handleInputChange = (cellInfo, event) => {
@@ -152,27 +189,6 @@ class DeviceManger extends React.Component{
     );
   };
 
-  renderTables(Header, id) {
-    return (
-      <div className="row">
-        <h3> Top {Header} Devices</h3>
-        <ReactTable
-          showPaginationBottom= {false}
-          data={this.state.data}
-          columns={this.state.filtered_columns.filter(x => x.Header === 'Owner' || x.Header === 'IP' || x.Header === `${Header}`)}
-          defaultSorted={[
-            {
-              id: `${id}`,
-              desc: true
-            }
-          ]}
-          minRows={0}
-          defaultPageSize={5}
-          sortable={false}
-        />
-      </div>
-    );
-  }
 
   render() {
 
@@ -181,10 +197,10 @@ class DeviceManger extends React.Component{
       <h1 className="title"> Device Manager </h1>
       <div className="page">
         <div className="rows">
-          {this.renderTables('CPU', 'cpuPct')}
-          {this.renderTables('Memory', 'memBytes')}
-          {this.renderTables('TX', 'networkRxBytes')}
-          {this.renderTables('RX', 'networkTxBytes')}
+        <RenderTable header='CPU' id='cpuPct' data={this.state.data} filtered_columns={this.state.filtered_columns}/>
+        <RenderTable header='Memory' id='memBytes' data={this.state.data} filtered_columns={this.state.filtered_columns}/>
+        <RenderTable header='TX' id='networkRxBytes' data={this.state.data} filtered_columns={this.state.filtered_columns}/>
+        <RenderTable header='RX' id='networkTxBytes' data={this.state.data} filtered_columns={this.state.filtered_columns}/>
         </div>
         <div className="full-table" style={{borderStyle: 'solid', borderColor: '#92a8d1'}}>
         <h1> Device List </h1>
